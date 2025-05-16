@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="sof3012:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>sof3012</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="sof3012-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="sof3012:war exploded" />
+    </root>
+  </artifact>
+</component>
