@@ -6,12 +6,14 @@ contentType="text/html;charset=UTF-8" language="java" %>
     <title>Title</title>
   </head>
   <body>
-    <form action="">
-      Cate code: <input type="text" name="mssv" />
+    <form action="/category/update?a1=${b.id1}" method="post">
+      Cate code: <input type="text" name="categoryCode"
+                        value="${b.categoryCode}"/>
       <br />
-      Cate name: <input type="text" name="ten" />
+      Cate name: <input type="text" name="categoryName"
+                        value="${b.categoryName}" />
       <br />
-      <button>Update</button>
+      <button type="submit">Update</button>
     </form>
   </body>
 </html>

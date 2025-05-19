@@ -7,6 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.SneakyThrows;
+import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.IOException;
 
@@ -66,19 +68,43 @@ public class CategoryServlet extends HttpServlet {
         }
     }
 
+    @SneakyThrows
     private void add(HttpServletRequest request, HttpServletResponse response) {
+        // B1: Tao 1 doi duong rong
+        Category1 cate = new Category1();
+        // B2: Mapping tat ca cac thuoc
+        BeanUtils.populate(cate, request.getParameterMap());
+        // B3: Goi add
+        cateService.add(cate);
+        // B4: Quay lai trang chu
+        response.sendRedirect("/category/hien-thi");
     }
 
+    @SneakyThrows
     private void update(HttpServletRequest request, HttpServletResponse response) {
+        // B1: Lay id tren duong dan
+        String id = request.getParameter("a1");
+        // B2: Goi get one
+        Category1 cate = cateService.getOne(Long.valueOf(id));
+        // B3: Mapping du lieu
+        BeanUtils.populate(cate,request.getParameterMap());
+        //B4: Quay lai trang chu
+        response.sendRedirect("/category/hien-thi");
     }
 
     private void search(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private void viewAdd(HttpServletRequest request, HttpServletResponse response) {
+    private void viewAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/buoi1/add-category.jsp")
+                .forward(request, response);
     }
 
-    private void viewUpdate(HttpServletRequest request, HttpServletResponse response) {
+    private void viewUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        Category1 cate = cateService.getOne(Long.valueOf(id));
+        request.setAttribute("b", cate);
+        request.getRequestDispatcher("/buoi1/update-cate.jsp").forward(request, response);
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -92,13 +118,12 @@ public class CategoryServlet extends HttpServlet {
         response.sendRedirect("/category/hien-thi");
 //        request.setAttribute("lists", cateService.getAll());
 //        request.getRequestDispatcher("/buoi1/categorys.jsp").forward(request, response);
-
     }
 
     private void detailDuLieu(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("a");
         Category1 cate = cateService.getOne(Long.valueOf(id));
-        request.setAttribute("b",cate);
+        request.setAttribute("b", cate);
         request.getRequestDispatcher("/buoi1/detail-cate.jsp").forward(request, response);
     }
 
