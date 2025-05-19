@@ -88,7 +88,9 @@ public class CategoryServlet extends HttpServlet {
         Category1 cate = cateService.getOne(Long.valueOf(id));
         // B3: Mapping du lieu
         BeanUtils.populate(cate,request.getParameterMap());
-        //B4: Quay lai trang chu
+        // B4: Goi ham tu service
+        cateService.update(cate);
+        // b5: Quay lai trang chu
         response.sendRedirect("/category/hien-thi");
     }
 
